@@ -1,9 +1,17 @@
 spring:
+  application:
+    name: CrudSpringbootMongoBack
   data:
     mongodb:
-      host: localhost
-      port: 27017
-      username: admin
-      password: pass
-      authentication-database: admin
+#      host: localhost
+#      port: 27017
+#      username: admin
+#      password: pass
+#      authentication-database: admin
       database: tutorial
+      uri: mongodb+srv://${{ secrets.USERNAME_DB }}:${{ secrets.PASSWORD_DB }}@tutorial-cluster.c0i03uk.mongodb.net/?retryWrites=true&w=majority
+
+logging:
+  level:
+    org:
+      springframework: INFO
