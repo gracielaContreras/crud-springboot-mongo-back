@@ -32,3 +32,24 @@ jobs:
       with:
         name: artifact
         path: target/crud-springboot-mongo-back-0.0.1-SNAPSHOT.jar
+  deploy:
+    needs: build
+    name: Deploy
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Download JAR
+        uses: actions/download-artifact@v3
+        with:
+          name: artifact
+      - name: Deploy to EBS
+        uses: einaregilsson/beanstalk-deploy@v13
+        with:
+          aws_access_key: ${{ secret.AWS_ACCESS_KEY_ID }}
+          aws_secret_key: ${{ secret.AWS_SECRET_ACCESS_KEY }}
+          application_name: springboot-mongo-back
+          environment_name: Springboot-mongo-back-env
+          version_lavel: ${{ github.SHA }}
+          region: us-east-2
+          deployment_package: crud-springboot-mongo-back-0.0.1-SNAPSHOT.jar
+
